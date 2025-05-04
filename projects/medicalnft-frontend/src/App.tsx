@@ -1,7 +1,12 @@
 import { SupportedWallet, WalletId, WalletManager, WalletProvider } from '@txnlab/use-wallet-react'
 import { SnackbarProvider } from 'notistack'
-import Home from './Home'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import Layout from './components/Layout/Layout'
+import ProfilePage from './pages/ProfilePage'
+import MedicalServicesPage from './pages/MedicalServicesPage'
+import MarketplacePage from './pages/MarketplacePage'
 import { getAlgodConfigFromViteEnvironment, getKmdConfigFromViteEnvironment } from './utils/network/getAlgoClientConfigs'
+
 
 let supportedWallets: SupportedWallet[]
 if (import.meta.env.VITE_ALGOD_NETWORK === 'localnet') {
@@ -49,7 +54,16 @@ export default function App() {
   return (
     <SnackbarProvider maxSnack={3}>
       <WalletProvider manager={walletManager}>
-        <Home />
+        <Router>
+          <Layout>
+            <Routes>
+              <Route path="/" element={<ProfilePage />} />
+              <Route path="/profile" element={<ProfilePage />} />
+              <Route path="/medical-services" element={<MedicalServicesPage />} />
+              <Route path="/marketplace" element={<MarketplacePage />} />
+            </Routes>
+          </Layout>
+        </Router>
       </WalletProvider>
     </SnackbarProvider>
   )

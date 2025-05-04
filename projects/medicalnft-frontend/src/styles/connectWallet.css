@@ -1,0 +1,101 @@
+/* Modal Background */
+.modal {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.modal.modal-open {
+  opacity: 1;
+}
+
+/* Modal Content */
+.modal-box {
+  background-color: #ffffff;
+  border-radius: 16px;
+  padding: 2rem;
+  width: 90%;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  position: relative;
+  animation: scaleIn 0.25s ease-in-out;
+  max-height: 85vh;
+  overflow-y: auto;
+}
+
+/* Modal Header */
+.modal-box h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 1rem;
+}
+
+/* Wallet Button List */
+.wallet-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin: 1.5rem 0;
+}
+
+/* Wallet Button */
+.wallet-button {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background-color: #f0fdfa;
+  border: 1px solid #0f766e;
+  color: #0f766e;
+  border-radius: 12px;
+  padding: 0.75rem 1.25rem;
+  font-weight: 500;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  width: 100%;
+  text-align: left;
+}
+
+.wallet-button:hover {
+  background-color: #ccfbf1;
+}
+
+/* Wallet Icon */
+.wallet-button img {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+}
+
+/* Divider */
+.divider {
+  border-top: 1px solid #e5e7eb;
+  margin: 1.5rem 0;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
