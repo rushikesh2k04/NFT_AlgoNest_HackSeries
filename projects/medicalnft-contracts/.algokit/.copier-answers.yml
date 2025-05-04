@@ -1,0 +1,10 @@
+# Changes here will be overwritten by Copier; NEVER EDIT MANUALLY
+_commit: 1.6.0
+_src_path: gh:algorandfoundation/algokit-python-template
+author_email: rushikesh9.2004@gmail.com
+author_name: rushikesh2k04
+contract_name: medi_nft
+deployment_language: python
+preset_name: starter
+project_name: medicalnft-contracts
+
