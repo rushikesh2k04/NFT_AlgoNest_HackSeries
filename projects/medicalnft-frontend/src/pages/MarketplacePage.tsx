@@ -14,8 +14,6 @@ const MarketplacePage: React.FC = () => {
     <div className="marketplace-container">
       <div className="nft-item">
         <h3 className="nft-name">{nftData.assetName}</h3>
-        {/* <p className="nft-price">{(nftData.unitaryPrice / 1_000_000n).toString()} ALGO</p> */}
-        <p className="nft-description">Complete blood work and physical examination results from annual check-up.</p>
         <p className="nft-created">Asset ID:<b> {nftData.assetId}</b></p>
         <p className="nft-created">Created: {nftData.creationDate}</p>
 
