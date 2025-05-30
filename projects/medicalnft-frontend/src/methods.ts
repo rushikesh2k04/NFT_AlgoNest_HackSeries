@@ -31,3 +31,41 @@ export async function create(
   console.log("✅ Asset created with ID:", assetId)
     return assetId
   }
+
+export function createApplication(
+  algorand: algokit.AlgorandClient,
+  nftclient: NftContractClient,
+  nftfactory: NftContractFactory,
+  signer: TransactionSigner,
+  sender: string,
+  assetId: bigint,
+  setAppId: (id: bigint) => void,
+): () => Promise<bigint> {
+
+  return async () => {
+    const result = await nftfactory.send.create.createApplication({ args: [assetId], sender });
+
+    const newClient = new NftContractClient({ appId: result.appClient.appId, algorand, defaultSigner: signer });
+
+    const mbrpay = await algorand.createTransaction.payment({
+      sender,
+      receiver: result.appClient.appAddress,
+      amount: algokit.algos(0.2),
+      extraFee: algokit.algos(0.001),
+    });
+
+    await newClient.send.optInToAsset({ args: [mbrpay], sender, assetReferences: [assetId] });
+
+    await algorand.send.assetTransfer({
+      sender,
+      assetId,
+      receiver: result.appClient.appAddress,
+      amount: BigInt(1),
+    });
+
+    const appId = BigInt(result.appClient.appId);
+    setAppId(appId);
+
+    return appId;
+  };
+}
