@@ -88,3 +88,31 @@ export function optIn(
     }
   }
 }
+
+export function assetFromApp(
+  algorand: algokit.AlgorandClient,
+  nftclient: NftContractClient,
+  signer: TransactionSigner,
+  sender: string,
+  assetID: bigint
+) {
+  return async () => {
+    try {
+      try {
+        console.log(sender)
+        const accountInfo = await algorand.asset.getAccountInformation(sender, assetID);
+        if (accountInfo && accountInfo.balance > 0n) {
+          alert("You Already Own this asset. You cannot purchase it again.");
+          return;
+        }
+      } catch (error) {
+        console.log("User does not own the asset. Proceeding with purchase....");
+      }
+      await algorand.send.assetOptIn({ sender: sender, assetId: assetID , signer});
+      const result = await nftclient.send.assetTransferFromApp({ args: [assetID, sender], sender: sender, assetReferences:[assetID]});
+      console.log("Transfered the asset:",result);
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
