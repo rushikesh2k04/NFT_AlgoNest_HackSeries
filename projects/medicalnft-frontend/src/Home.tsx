@@ -119,3 +119,33 @@ const Home: React.FC = () => {
     <p><strong>Asset ID:</strong> {assetId.toString()}</p>
   </div>
 )}
+
+        <MethodCall
+        methodFunction={ async () => {
+          if (assetId === 0n) {
+            alert("Create the Asset First !!!")
+          }
+
+          const createApp = methods.createApplication(
+            algorand,
+            nftClient,
+            nftFactory,
+            TransactionSigner,
+            activeAddress!,
+            assetId,
+            setAppId
+          )
+
+          const newAppId = await createApp()
+          setAppId(newAppId)
+
+        }}
+        text = "Create App"
+        />
+        {
+          appId !== 0n && (
+            <div className='asset-id-display'>
+              <p><strong>Application ID:</strong> {appId.toString()}</p>
+            </div>
+          )
+        }
