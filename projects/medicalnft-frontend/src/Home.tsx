@@ -207,3 +207,42 @@ const Home: React.FC = () => {
   }}
   text={loading ? "Transferring..." : "Transfer from App"}
 />
+
+<MethodCall
+  methodFunction={async () => {
+    setLoading(true);
+    try {
+      if (!activeAccount) throw new Error('Please connect your wallet.');
+      if (!inputAssetId) throw new Error('Asset ID is required for revoke.');
+
+      const parsedAssetId = BigInt(inputAssetId);
+      const newRevokeAppId = await revokeMethods.createApplication(
+        algorand,
+        revokeClient,
+        revokeFactory,
+        TransactionSigner,
+        activeAddress!,
+        parsedAssetId,
+        setRevokeAppId
+      );
+
+      const newAppId = await newRevokeAppId()
+      setRevokeAppId(newAppId)
+
+      alert(`Revoke App Created with ID:  ${revokeAppId}`);
+    } catch (err) {
+      console.error(err);
+      alert('Revoke App Creation failed. See console for details.');
+    } finally {
+      setLoading(false);
+    }
+  }}
+  text={loading ? "Creating Revoke App..." : "Create Revoke Application"}
+/>
+{
+          appId !== 0n && (
+            <div className='asset-id-display'>
+              <p><strong>Application ID:</strong> {revokeAppId.toString()}</p>
+            </div>
+          )
+        }
