@@ -1,24 +1,33 @@
 // src/components/methods.ts
-import * as algokit from '@algorandfoundation/algokit-utils'
+import * as algokit from '@algorandfoundation/algokit-utils';
+import { NftContractClient, NftContractFactory } from './contracts/NFTContract';
+
+import { TransactionSigner } from 'algosdk';
+
 
 export async function create(
-  algodClient: algokit.AlgorandClient,
+  algorand: algokit.AlgorandClient,
   sender: string,
-  quantity: bigint,
-  dec: number,
   assetname: string,
   url: string,
+  patient: string,
+  unitName: string,
 ): Promise<bigint> {
-  const assetCreate = await algodClient.send.assetCreate({
-    sender,
-    total: quantity,
-    decimals: dec,
-    assetName: assetname,
-    unitName: assetname.substring(0, 3),
-    url: url,
-  })
 
-  const assetId = BigInt(assetCreate.confirmation.assetIndex!)
-  console.log("Asset created with ID:", assetId)
-  return assetId
-}
+    const assetCreate = await algorand.send.assetCreate({
+      sender,
+      total: BigInt(100),
+      decimals: 2,
+      assetName: assetname,
+      unitName: unitName,
+      url: url,
+      manager: patient,
+      clawback: patient,
+    })
+
+    const assetId = BigInt(assetCreate.confirmation.assetIndex!)
+    if (!assetId) throw new Error("Asset creation failed, no ID returned")
+
+  console.log("✅ Asset created with ID:", assetId)
+    return assetId
+  }
