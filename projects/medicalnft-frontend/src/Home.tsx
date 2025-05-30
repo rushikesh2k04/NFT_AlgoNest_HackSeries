@@ -149,3 +149,61 @@ const Home: React.FC = () => {
             </div>
           )
         }
+
+         <div className="flex flex-col gap-2">
+            <label>
+             App ID:
+              <input
+                type="text"
+                value={inputAppId}
+                onChange={(e) => setInputAppId(e.target.value)}
+                className="border p-1 rounded"
+              />
+            </label>
+
+            <label>
+              Asset ID:
+              <input
+                type="text"
+                value={inputAssetId}
+                onChange={(e) => setInputAssetId(e.target.value)}
+                className="border p-1 rounded"
+              />
+            </label>
+          </div>
+
+          <MethodCall
+  methodFunction={async () => {
+    setLoading(true);
+    try {
+      if (!activeAccount) throw new Error('Please connect wallet first')
+      if (!inputAppId) throw new Error('App ID is required')
+      const appId = BigInt(inputAppId);
+      const assetId = BigInt(inputAssetId);
+      const appAddress = algosdk.getApplicationAddress(appId);
+
+      const nftClient = new NftContractClient({
+        appId: BigInt(appId),
+        algorand: algorand,
+        defaultSigner: TransactionSigner,
+      })
+
+      const transfer = methods.assetFromApp(
+        algorand,
+        nftClient,
+        TransactionSigner,
+        activeAddress!,
+        assetId,
+      );
+
+      await transfer();
+      alert(`Asset ${assetId} transferred to ${activeAddress}`);
+    } catch (err) {
+      console.error(err);
+      alert("Transfer failed. See console for details.");
+    } finally {
+      setLoading(false);
+    }
+  }}
+  text={loading ? "Transferring..." : "Transfer from App"}
+/>
