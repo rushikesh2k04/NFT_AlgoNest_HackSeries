@@ -69,3 +69,22 @@ export function createApplication(
     return appId;
   };
 }
+
+export function optIn(
+  algorand: algokit.AlgorandClient,
+  signer: TransactionSigner,
+  sender: string,
+  assetID: bigint,
+) {
+  return async () => {
+    try{
+      await algorand.send.assetOptIn({ sender: sender, assetId: assetID , signer});
+      console.log("The Asste is opted into:",sender," Address:", assetID)
+      console.log(signer)
+    }
+    catch(error)
+    {
+      console.log("Error occured in opt into asset")
+    }
+  }
+}
