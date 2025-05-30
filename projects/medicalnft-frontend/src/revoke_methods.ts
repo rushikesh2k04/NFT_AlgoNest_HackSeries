@@ -43,3 +43,30 @@ export function createApplication(
   };
 }
 
+
+export function changeClawBack(
+  algorand: algokit.AlgorandClient,
+  signer: TransactionSigner,
+  appId: bigint,
+  sender: string,
+  assetId: bigint
+) {
+  return async () => {
+    try {
+      const assetInfo = await algorand.asset.getById(assetId)
+    console.log(assetInfo.manager)
+    console.log(sender)
+    const newappId = BigInt(appId);
+    const appAddress = algosdk.getApplicationAddress(newappId);
+    const txn_result = algorand.send.assetConfig({
+    sender: sender,
+    assetId: assetId,
+    manager: sender,
+    clawback: appAddress,
+  })
+   console.log('Asset update transaction ID:', ((await txn_result).txIds));
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
