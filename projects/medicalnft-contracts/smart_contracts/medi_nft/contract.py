@@ -70,3 +70,18 @@ class NFTRevoke(ARC4Contract):
             clawback=Global.current_application_address, # Set clawback to app address
             fee=0,
         ).submit()
+ @abimethod()
+    def opt_in_to_asset(self, mbrpay: gtxn.PaymentTransaction) -> None:
+        assert Txn.sender == Global.creator_address
+        assert not Global.current_application_address.is_opted_in(Asset(self.assetid))
+
+        assert mbrpay.receiver == Global.current_application_address
+
+        assert mbrpay.amount == Global.min_balance + Global.asset_opt_in_min_balance
+
+        itxn.AssetTransfer(
+            xfer_asset= self.assetid,
+            asset_receiver= Global.current_application_address,
+            asset_amount= 0,
+            fee=0,
+        ).submit()
