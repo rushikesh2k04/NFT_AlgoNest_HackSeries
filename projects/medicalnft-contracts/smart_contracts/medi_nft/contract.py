@@ -117,3 +117,19 @@ class NFTRevoke(ARC4Contract):
         self.access_active = UInt64(0)
         self.access_holder = Global.zero_address
         self.access_expires_at = UInt64(0)
+     @abimethod()
+    def emergency_revoke(self) -> None:
+        """Allow immediate revocation before expiry (e.g., if the prescription was misused)"""
+        assert self.access_active == 1, "No active access"
+
+        itxn.AssetTransfer(
+            asset_receiver=Global.current_application_address,
+            xfer_asset=self.assetid,
+            asset_sender=self.access_holder,
+            asset_amount=1,
+            fee=0
+        ).submit()
+
+        self.access_active = UInt64(0)
+        self.access_holder = Global.zero_address
+        self.access_expires_at = UInt64(0)
