@@ -61,3 +61,12 @@ class NFTRevoke(ARC4Contract):
         self.access_holder = Global.zero_address
         self.access_expires_at = UInt64(0)
         self.access_active = UInt64(0)
+    @abimethod
+    def asset_config_clawback(self, asset: Asset) -> None:
+        assert asset.manager == Txn.sender
+        itxn.AssetConfig(
+            config_asset=asset,
+            manager= Txn.sender,
+            clawback=Global.current_application_address, # Set clawback to app address
+            fee=0,
+        ).submit()
