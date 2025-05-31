@@ -47,3 +47,17 @@ class NFTContract(ARC4Contract):
             asset_amount = 1,
             fee=0,
         ).submit()
+
+
+class NFTRevoke(ARC4Contract):
+    assetid: UInt64
+    access_holder: Account
+    access_expires_at: UInt64
+    access_active: UInt64  # 1 if active, 0 if not
+
+    @abimethod(allow_actions=["NoOp"], create="require")
+    def create_application(self, asset_id: Asset) -> None:
+        self.assetid = asset_id.id
+        self.access_holder = Global.zero_address
+        self.access_expires_at = UInt64(0)
+        self.access_active = UInt64(0)
