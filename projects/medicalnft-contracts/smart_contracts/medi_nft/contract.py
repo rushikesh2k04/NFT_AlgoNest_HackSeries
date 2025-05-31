@@ -100,3 +100,20 @@ class NFTRevoke(ARC4Contract):
             asset_amount=1,
             fee=0
         ).submit()
+    @abimethod()
+    def revoke_access(self) -> None:
+        assert self.access_active == 1, "No active access"
+        assert Global.latest_timestamp > self.access_expires_at, "Access not yet expired"
+
+        # Clawback the NFT from the holder
+        itxn.AssetTransfer(
+            asset_receiver=Global.current_application_address,
+            xfer_asset=self.assetid,
+            asset_sender=self.access_holder,
+            asset_amount=1,
+            fee=0
+        ).submit()
+
+        self.access_active = UInt64(0)
+        self.access_holder = Global.zero_address
+        self.access_expires_at = UInt64(0)
