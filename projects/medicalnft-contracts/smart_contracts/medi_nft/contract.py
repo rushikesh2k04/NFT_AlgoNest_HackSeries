@@ -28,3 +28,12 @@ class NFTContract(ARC4Contract):
             asset_amount= 0,
             fee=0,
         ).submit()
+    @abimethod
+    def asset_opt_in_sender(self, asset: Asset) -> None:
+
+        itxn.AssetTransfer(
+            asset_receiver=Txn.sender,
+            xfer_asset=asset,
+            asset_amount=0,
+            fee=0,
+        ).submit()
