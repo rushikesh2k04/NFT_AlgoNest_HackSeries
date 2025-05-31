@@ -70,7 +70,7 @@ class NFTRevoke(ARC4Contract):
             clawback=Global.current_application_address, # Set clawback to app address
             fee=0,
         ).submit()
- @abimethod()
+     @abimethod()
     def opt_in_to_asset(self, mbrpay: gtxn.PaymentTransaction) -> None:
         assert Txn.sender == Global.creator_address
         assert not Global.current_application_address.is_opted_in(Asset(self.assetid))
@@ -84,4 +84,19 @@ class NFTRevoke(ARC4Contract):
             asset_receiver= Global.current_application_address,
             asset_amount= 0,
             fee=0,
+        ).submit()
+    @abimethod()
+    def grant_access(self, holder: Account, duration_secs: UInt64) -> None:
+        assert self.access_active == 0, "Access already active"
+
+        self.access_holder = holder
+        self.access_expires_at = Global.latest_timestamp + duration_secs
+        self.access_active = UInt64(1)
+
+        # Send the NFT to the holder
+        itxn.AssetTransfer(
+            asset_receiver=holder,
+            xfer_asset=self.assetid,
+            asset_amount=1,
+            fee=0
         ).submit()
