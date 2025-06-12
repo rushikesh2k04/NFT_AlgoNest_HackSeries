@@ -1,0 +1,246 @@
+/* Reset and base styles */
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f3f4f6; /* Tailwind gray-100 */
+  min-height: 100vh;
+}
+
+/* Headings */
+h1, h2 {
+  color: #1e293b;
+}
+
+h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: #1e40af;
+}
+
+/* Grid layout for prescription cards */
+.grid {
+  display: grid;
+  gap: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .grid-cols-1 {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .sm\:grid-cols-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 768px) {
+  .md\:grid-cols-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (min-width: 1024px) {
+  .lg\:grid-cols-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Prescription card */
+.prescription-card,
+.bg-white {
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  transition: transform 0.2s, box-shadow 0.3s;
+}
+
+.prescription-card:hover,
+.hover\:shadow-lg:hover {
+  box-shadow: 0 10px 15px rgba(0,0,0,0.15);
+  transform: translateY(-3px);
+}
+
+.text-lg { font-size: 1.125rem; }
+.font-semibold { font-weight: 600; }
+.text-blue-700 { color: #1d4ed8; }
+.mb-2 { margin-bottom: 0.5rem; }
+.text-gray-600 { color: #4b5563; }
+.text-sm { font-size: 0.875rem; }
+.mb-1 { margin-bottom: 0.25rem; }
+.mt-4 { margin-top: 1rem; }
+.flex { display: flex; }
+.justify-center { justify-content: center; }
+.gap-4 { gap: 1rem; }
+
+/* Buttons */
+button,
+.button {
+  cursor: pointer;
+  font-size: 0.95rem;
+  border-radius: 0.375rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  transition: background-color 0.3s;
+  font-weight: 500;
+}
+
+.bg-blue-500, .view-button {
+  background-color: #3b82f6;
+  color: white;
+}
+.bg-blue-500:hover, .view-button:hover {
+  background-color: #2563eb;
+}
+
+.bg-green-500, .transfer-button {
+  background-color: #10b981;
+  color: white;
+}
+.bg-green-500:hover, .transfer-button:hover {
+  background-color: #059669;
+}
+
+.bg-red-500 {
+  background-color: #ef4444;
+  color: white;
+}
+.bg-red-500:hover {
+  background-color: #dc2626;
+}
+
+.bg-gray-400 {
+  background-color: #9ca3af;
+  color: white;
+}
+.bg-gray-400:hover {
+  background-color: #6b7280;
+}
+
+.text-white { color: white; }
+.rounded-md { border-radius: 0.375rem; }
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Modal Overlay */
+.modal-overlay,
+.fixed.inset-0.bg-black.bg-opacity-50 {
+  position: fixed;
+  inset: 0;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.5); /* Only the overlay is semi-transparent */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+}
+
+/* Modal Content */
+.modal-content,
+.bg-white.rounded-lg.p-6.max-w-md.w-full,
+.bg-white.rounded-lg.p-6.max-w-lg.w-full {
+  background: #fff !important;
+  opacity: 1 !important;
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 15px rgba(0,0,0,0.15);
+  padding: 1.5rem;
+  max-width: 28rem;
+  width: 100%;
+  z-index: 100;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+/* Modal header, form elements */
+.text-2xl { font-size: 1.5rem; }
+.font-bold { font-weight: 700; }
+.mb-4 { margin-bottom: 1rem; }
+
+label {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+input[type="text"],
+input[type="date"],
+input[type="time"],
+select {
+  width: 100%;
+  border: 1px solid #d1d5db;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.375rem;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  box-sizing: border-box;
+  transition: border-color 0.3s;
+}
+
+input[type="text"]:focus,
+input[type="date"]:focus,
+input[type="time"]:focus,
+select:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+/* Modal buttons container */
+.flex.justify-end.gap-4.mt-4 {
+  margin-top: 1rem;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+/* Responsive layout for cards */
+@media screen and (max-width: 640px) {
+  .prescription-card {
+    padding: 12px;
+  }
+}
+
+/* Optional: For smooth scrolling inside modal if content is long */
+.modal-content::-webkit-scrollbar {
+  width: 6px;
+}
+.modal-content::-webkit-scrollbar-thumb {
+  background-color: rgba(0,0,0,0.2);
+  border-radius: 3px;
+}
+
+/* Utility classes */
+.text-center { text-align: center; }
+.p-6 { padding: 1.5rem; }
+.p-4 { padding: 1rem; }
+.rounded-lg { border-radius: 0.5rem; }
+.shadow-lg { box-shadow: 0 10px 15px rgba(0,0,0,0.15); }
+.max-w-md { max-width: 28rem; }
+.max-w-lg { max-width: 32rem; }
+.w-full { width: 100%; }
+.mt-3 { margin-top: 0.75rem; }
+.mt-6 { margin-top: 1.5rem; }
+.mb-6 { margin-bottom: 1.5rem; }
+.gap-2 { gap: 0.5rem; }
+.gap-6 { gap: 1.5rem; }
+.space-y-2 > * + * { margin-top: 0.5rem; }
+.space-y-6 > * + * { margin-top: 1.5rem; }
+.grid {
+  display: grid;
+  gap: 1.5rem;
+}
+.grid-cols-1 {
+  grid-template-columns: repeat(1, 1fr);
+}
+@media (min-width: 640px) {
+  .sm\:grid-cols-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 768px) {
+  .md\:grid-cols-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
