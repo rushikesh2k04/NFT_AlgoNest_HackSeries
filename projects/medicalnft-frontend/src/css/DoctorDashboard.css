@@ -1,0 +1,86 @@
+.doctor-dashboard {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.dashboard-title {
+  text-align: center;
+  font-size: 2em;
+  margin-bottom: 20px;
+  color: #1976d2;
+}
+
+.dashboard-tabs {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  gap: 10px;
+}
+
+.dashboard-tabs button {
+  padding: 10px 20px;
+  font-size: 1em;
+  cursor: pointer;
+  background-color: #f0f0f0;
+  border: 2px solid #1976d2;
+  color: #1976d2;
+  border-radius: 8px;
+  transition: 0.2s;
+}
+
+.dashboard-tabs button:hover {
+  background-color: #e3f2fd;
+}
+
+.dashboard-tabs button.active {
+  background-color: #1976d2;
+  color: white;
+}
+
+.dashboard-content {
+  border-top: 1px solid #ccc;
+  padding-top: 20px;
+}
+
+.form-card {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  margin-top: 20px;
+}
+
+.form-card label {
+  display: block;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.form-card input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 4px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.form-card h2,
+.form-card h3 {
+  color: #1976d2;
+}
+
+.form-card button {
+  margin-top: 20px;
+  padding: 10px 16px;
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.form-card button:hover {
+  background-color: #115293;
+}
